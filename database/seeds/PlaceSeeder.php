@@ -1,6 +1,6 @@
 <?php
 
-use App\Places;
+use App\Place;
 use Illuminate\Database\Seeder;
 
 class PlaceSeeder extends Seeder
@@ -12,82 +12,82 @@ class PlaceSeeder extends Seeder
      */
     public function run()
     {
-        Places::create([
+        Place::create([
             'place' => 'Cirugía',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Medicina    ',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Médico - Quirúrgico',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Geriatría',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Pediatría',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Pabellón',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'UPC ADL',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'UPC PED',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'UPC NEO',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'URG ADL',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'URG PED',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'URG G-O',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Gine-Obst',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'SAIP',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'CAE',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Dental',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Med Física y Rehabilitación',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Movilización',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'UMT- Donantes',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Anat. Patológica',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Farmacia',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Esterilización',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Nutrición',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Laboratorio',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Imagenología',
         ]);
-        Places::create([
+        Place::create([
             'place' => 'Domicilio',
         ]);
 

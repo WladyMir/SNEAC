@@ -26,7 +26,7 @@ class CreateEventDataTable extends Migration
             $table->unsignedInteger('details_id')->nullable();
             $table->foreign('details_id')->references('id')->on('details');
 
-            $table->string('detail_text',30)->nullable();
+            $table->string('detail_text',100)->nullable();
 
             $table->unsignedInteger('place_id')->nullable();
             $table->foreign('place_id')->references('id')->on('places');

@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventDatas extends Model
+class EventData extends Model
 {
     public function classification()
     {
-        return $this->belongsTo(Classifications::class);
+        return $this->belongsTo(Classification::class);
     }
     protected $fillable = [
         'event_date',
@@ -24,15 +24,15 @@ class EventDatas extends Model
     ];
     public function eventName()
     {
-        return $this->belongsTo(EventsNames::class);
+        return $this->belongsTo(EventsName::class);
     }
     public function detail()
     {
-        return $this->belongsTo(Details::class);
+        return $this->belongsTo(Detail::class);
     }
     public function place()
     {
-        return $this->belongsTo(Places::class);
+        return $this->belongsTo(Place::class);
     }
     public static function findById($id)
     {

@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','rut','place_id','labor','is_admin','is_quality_attendant',
     ];
 
     /**
@@ -26,4 +26,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    protected $casts = [
+        'is_admin' => 'boolean'
+    ];
+    public function place()
+    {
+        return $this->belongsTo(Place::class);
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Report::class);
+    }
+    public function activityResponsable()
+    {
+        return $this->hasMany(ActivityResponsable::class);
+    }
+    public static function findById($id)
+    {
+        return static::where('id', $id)->first();
+    }
+
+
+
 }

@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Classifications extends Model
+class Classification extends Model
 {
     public function eventData()
     {
-        return $this->hasMany(EventDatas::class);
+        return $this->hasMany(EventData::class);
     }
     public function eventName()
     {
-        return $this->hasMany(EventsNames::class);
+        return $this->hasMany(EventsName::class);
     }
     public static function findById($id)
     {

@@ -34,10 +34,14 @@
                     <span class="glyphicon glyphicon-th"></span>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="rut">Rut</label>
-                <input type="text" class="form-control" name="rut" id="name" placeholder="12.345.678-9" value="{{ old('rut') }}">
+                <input type="text" class="form-control" name="rut" id="rut" placeholder="12.345.678-9" value="{{ old('rut') }}">
             </div>
+
+
+
             <label>Sexo</label>
             <div class="form-group">
                 <label class="radio-inline">
@@ -88,11 +92,11 @@
 
         <div class="col-6">
             <div class="form-group">
-                <label for="observation">Observaciones</label>
+                <label for="observation">Observaciones (diagnóstico)</label>
                 <textarea class="form-control" name="observation" id="observation" rows="3"></textarea>
             </div>
             <div class="form-group">
-                <h2>Concecuencias</h2>
+                <h2>Consecuencias</h2>
                 @foreach($consequences as $consequence)
                     <label class="custom-control custom-radio">
                         <input type="radio" name="consequence_id" id="{{$consequence->id}}" value="{{$consequence->id}}"> {{$consequence->consequence}}
@@ -110,6 +114,7 @@
 
 
 </form>
+<script src="/js/rut/formatRut.js"></script>
 
 <script>
     $('.datepicker').datepicker({

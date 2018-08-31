@@ -1,6 +1,6 @@
 <?php
 
-use App\Origins;
+use App\Origin;
 use Illuminate\Database\Seeder;
 
 class OriginsSeeder extends Seeder
@@ -12,25 +12,25 @@ class OriginsSeeder extends Seeder
      */
     public function run()
     {
-        Origins::create([
+        Origin::create([
             'origin' => 'Paciente',
         ]);
-        Origins::create([
+        Origin::create([
             'origin' => 'Tarea y Tecnología',
         ]);
-        Origins::create([
+        Origin::create([
             'origin' => 'Individuo (funcionario)',
         ]);
-        Origins::create([
+        Origin::create([
             'origin' => 'Equipo de Trabajo',
         ]);
-        Origins::create([
+        Origin::create([
             'origin' => 'Ambiente',
         ]);
-        Origins::create([
+        Origin::create([
             'origin' => 'Organización y Gerencia',
         ]);
-        Origins::create([
+        Origin::create([
             'origin' => 'Contexto Institucional',
         ]);
 

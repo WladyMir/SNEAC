@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Administracion')
+@section('title','SNEAC')
 
 @section('title card','Sistema de Notificación de Incidente Eventos Adversos y Centinelas.')
 

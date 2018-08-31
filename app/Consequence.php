@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Consequences extends Model
+class Consequence extends Model
 {
     public function patientDatas()
     {
-        return $this->hasMany(PatientDatas::class);
+        return $this->hasMany(PatientData::class);
     }
     public static function findById($id)
     {

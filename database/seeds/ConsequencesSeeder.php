@@ -1,6 +1,6 @@
 <?php
 
-use App\Consequences;
+use App\Consequence;
 use Illuminate\Database\Seeder;
 
 class ConsequencesSeeder extends Seeder
@@ -12,28 +12,28 @@ class ConsequencesSeeder extends Seeder
      */
     public function run()
     {
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Incidente que no llego al paciente',
         ]);
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Incidente que llegó al paciente, pero no causo daño',
         ]);
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Situación con capacidad de causar incidente',
         ]);
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Llegó al paciente y no causo daño',
         ]);
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Causó daño temporal al paciente y prolongó la hospitalización',
         ]);
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Causa con daño permanente al paciente',
         ]);
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Comprometió la vida del paciente y se intervino para mantener',
         ]);
-        Consequences::create([
+        Consequence::create([
             'consequence' => 'Causó la muerte del paciente',
         ]);
 

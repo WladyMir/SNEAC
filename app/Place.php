@@ -4,15 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Details extends Model
+class Place extends Model
 {
-    public function eventName()
-    {
-        return $this->belongsTo(EventsNames::class);
-    }
     public function eventData()
     {
-        return $this->hasMany(EventDatas::class);
+        return $this->hasMany(EventData::class);
+    }
+
+    public function patientData()
+    {
+        return $this->hasMany(PatientData::class);
     }
     public static function findById($id)
     {

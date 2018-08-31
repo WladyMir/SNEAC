@@ -2,40 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Classifications;
-use App\Consequences;
-use App\Details;
-use App\EventsNames;
+use App\Classification;
+use App\Consequence;
+use App\ContributoryFactor;
+use App\Detail;
+use App\EventsName;
 use App\Mail\NewNotification;
-use App\PatientDatas;
-use App\EventDatas;
-use App\Places;
-use App\Notifications;
+use App\PatientData;
+use App\EventData;
+use App\Place;
+use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use ValidateRequests;
+use Freshwork\ChileanBundle\Rut;
 
 class NotificationController extends Controller
 {
+    public function getFactorForOrigin($id){
+
+        return ContributoryFactor::where('origin_id',$id)->get();
+    }
     public function getEventsForClassification($id){
 
-        return EventsNames::where('classifications_id',$id)->get();
+        return EventsName::where('classifications_id',$id)->get();
     }
     public function getDetailsForNameEvent($id){
-        return Details::where('event_name_id',$id)->get();
+        return Detail::where('event_name_id',$id)->get();
     }
     public function index()
 
     {
-        $title = 'Listado de usuarios';
+        $title = 'Listado de notifiaciones';
         return view('notifications.index',compact('title'));
     }
 
     public function create(){
-        $consequences= Consequences::all();
+        $consequences= Consequence::all();
 
-        $places = Places::all();
+        $places = Place::all();
 
         //dd($concequences);
 
@@ -43,11 +50,11 @@ class NotificationController extends Controller
     }
     public function event()
     {
-        $places = Places::all();
-        $classifications = Classifications::all();
-        $eventsNames = EventsNames::all();
-        $details = Details::all();
-        $patientDatas=PatientDatas::all();
+        $places = Place::all();
+        $classifications = Classification::all();
+        $eventsNames = EventsName::all();
+        $details = Detail::all();
+        $patientDatas=PatientData::all();
         $id_patient_datas=$patientDatas->last()->id;
         return view('notifications.event',compact('classifications','places','eventsNames','details','id_patient_datas'));
     }
@@ -60,7 +67,7 @@ class NotificationController extends Controller
         $data = request()->validate([
             'name_patient' =>'nullable',
             'admission_date' => 'nullable',
-            'rut' => 'required',
+            'rut' => 'required|cl_rut',
             'gender' => 'required',
             'patient_classification' => 'required',
             'observation' => 'required',
@@ -72,7 +79,7 @@ class NotificationController extends Controller
         //dd($data);
 
         if($data['patient_type'] === "ambulatorio"){
-            PatientDatas::create([
+            PatientData::create([
                 'name_patient' => $data['name_patient'],
                 'admission_date' => $data['admission_date'],
                 'rut' => $data['rut'],
@@ -86,10 +93,11 @@ class NotificationController extends Controller
 
             ]);
         }else{
-            PatientDatas::create([
+            PatientData::create([
                 'name_patient' => $data['name_patient'],
                 'admission_date' => $data['admission_date'],
-                'rut' => $data['rut'],
+                'rut'=>$data['rut'],
+                //'rut' => Rut::parse($data['rut'])->format(Rut::FORMAT_COMPLETE),
                 'gender' => $data['gender'],
                 'patient_classification' => $data['patient_classification'],
                 'observation' => $data['observation'],
@@ -124,7 +132,7 @@ class NotificationController extends Controller
         ]);
         //dd($data);
         if($data['details_id']===null){
-            $event_datas=EventDatas::create([
+            $event_datas=EventData::create([
                 'event_date'=> $data['event_date'],
                 'event_time'=>$data['event_time'],
                 'classification_id'=>$data['classification_id'],
@@ -140,7 +148,7 @@ class NotificationController extends Controller
         }
         else{
 
-            $event_datas=EventDatas::create([
+            $event_datas=EventData::create([
                 'event_date'=> $data['event_date'],
                 'event_time'=>$data['event_time'],
                 'classification_id'=>$data['classification_id'],
@@ -154,20 +162,24 @@ class NotificationController extends Controller
 
         }
         $id_event_datas=$event_datas->id;
+        $patient_datas= PatientData::findById($data['id_patient_datas']);
 
-        Notifications::create([
+        Notification::create([
             'patient_datas_id'=>$data['id_patient_datas'],
             'event_datas_id'=>$id_event_datas,
-            'event_type'=> 'Sin Clasificar',
+            'event_type'=> 'Sin clasificar',
             'event_status'=>'Por revisar',
-
+            'place_id'=>$data['place_id'],
+            'event_date'=>$data['event_date'],
+            'event_name_id'=> $data['event_name_id'],
+            'name_patient'=>$patient_datas->name_patient,
         ]);
 
-        $placeEvent=Places::findById($event_datas->place_id);
-        $patient_datas= PatientDatas::findById($data['id_patient_datas']);
-        $consequence=Consequences::findById($patient_datas->consequence_id);
-        $classification=Classifications::findById($event_datas->classification_id);
-        $event_name=EventsNames::findById($event_datas->event_name_id);
+        $placeEvent=Place::findById($event_datas->place_id);
+
+        $consequence=Consequence::findById($patient_datas->consequence_id);
+        $classification=Classification::findById($event_datas->classification_id);
+        $event_name=EventsName::findById($event_datas->event_name_id);
 
 
         Mail::to('wladimir.cerda@usach.cl','Wlady')

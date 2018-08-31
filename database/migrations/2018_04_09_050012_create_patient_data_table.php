@@ -17,7 +17,7 @@ class CreatePatientDataTable extends Migration
             $table->increments('id');
             $table->string('name_patient',30)->nullable();
             $table->date('admission_date')->nullable();
-            $table->string('rut',11);
+            $table->string('rut',15);
             $table->string('gender',30);
             $table->string('patient_classification',30);
             $table->string('patient_type',30)->nullable();

@@ -3,12 +3,12 @@
 namespace App\Mail;
 
 
-use App\Classifications;
-use App\Consequences;
-use App\EventDatas;
-use App\EventsNames;
-use App\PatientDatas;
-use App\Places;
+use App\Classification;
+use App\Consequence;
+use App\EventData;
+use App\EventsName;
+use App\PatientData;
+use App\Place;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -18,27 +18,27 @@ class NewNotification extends Mailable
 {
     use Queueable, SerializesModels;
     /**
-     * @var Places
+     * @var Place
      */
     public $placeEvent;
     /**
-     * @var PatientDatas
+     * @var PatientData
      */
     public $patient_datas;
     /**
-     * @var Consequences
+     * @var Consequence
      */
     public $consequence;
     /**
-     * @var Classifications
+     * @var Classification
      */
     public $classification;
     /**
-     * @var EventsNames
+     * @var EventsName
      */
     public $event_name;
     /**
-     * @var EventDatas
+     * @var EventData
      */
     public $event_datas;
 
@@ -47,12 +47,12 @@ class NewNotification extends Mailable
      *
      * @return void
      */
-    public function __construct(Places $placeEvent,
-                                PatientDatas $patient_datas,
-                                Consequences $consequence,
-                                Classifications $classification,
-                                EventsNames $event_name,
-                                EventDatas $event_datas)
+    public function __construct(Place $placeEvent,
+                                PatientData $patient_datas,
+                                Consequence $consequence,
+                                Classification $classification,
+                                EventsName $event_name,
+                                EventData $event_datas)
     {
 
         $this->placeEvent = $placeEvent;

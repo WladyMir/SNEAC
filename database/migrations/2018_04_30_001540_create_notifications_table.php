@@ -19,13 +19,17 @@ class CreateNotificationsTable extends Migration
             $table->foreign('patient_datas_id')->references('id')->on('patient_datas');
             $table->unsignedInteger('event_datas_id');
             $table->foreign('event_datas_id')->references('id')->on('event_datas');
-            $table->unsignedInteger('origin_id')->nullable();;
-            $table->foreign('origin_id')->references('id')->on('origins');
-            $table->unsignedInteger('contributory_factor_id')->nullable();;
-            $table->foreign('contributory_factor_id')->references('id')->on('contributory_factors');
             $table->string('event_type',20);
             $table->string('event_status',20);
+            $table->date('event_date');
+            $table->unsignedInteger('event_name_id')->nullable();
+            $table->string('name_patient',30)->nullable();
+            $table->foreign('event_name_id')->references('id')->on('events_names');
+            $table->unsignedInteger('place_id')->nullable();
+            $table->foreign('place_id')->references('id')->on('places');
             $table->timestamps();
+
+
         });
     }
 

@@ -5,7 +5,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PatientDatas extends Model
+class PatientData extends Model
 
 {
     public function setPatientTypeAttribute($value){
@@ -17,11 +17,11 @@ class PatientDatas extends Model
 
     public function consequence()
     {
-        return $this->belongsTo(Consequences::class);
+        return $this->belongsTo(Consequence::class);
     }
     public function place()
     {
-        return $this->belongsTo(Places::class);
+        return $this->belongsTo(Place::class);
     }
     public static function findById($id)
     {

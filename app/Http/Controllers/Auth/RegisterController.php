@@ -28,16 +28,15 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/gestion';
+    protected $redirectTo = '/gestion/administrarUsuarios';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
+    public function __construct(){
+        $this->middleware('admin');
     }
 
     /**
@@ -52,6 +51,10 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'rut' => 'required|string|max:13|unique:users|cl_rut',
+            'place_id' => 'required',
+            'is_admin' =>'required',
+            'labor' => 'required|string'
         ]);
     }
 
@@ -63,10 +66,34 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+
+        if($data['is_admin']==="si"){
+            return User::create([
+                'name' => $data['name'],
+                'labor' => $data['labor'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'rut'=> $data['rut'],
+                'is_admin' => true,
+                'is_quality_attendant' => false,
+                'place_id' =>$data['place_id'],
+
+
+            ]);
+        }
+        else{
+            return User::create([
+                'name' => $data['name'],
+                'labor' => $data['labor'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'rut'=> $data['rut'],
+                'place_id' =>$data['place_id'],
+                'is_admin' => false,
+                'is_quality_attendant' => true,
+            ]);
+        }
+
+
     }
 }

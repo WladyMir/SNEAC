@@ -1,6 +1,6 @@
 <?php
 
-use App\Classifications;
+use App\Classification;
 use Illuminate\Database\Seeder;
 
 class ClassifcationSeeder extends Seeder
@@ -12,22 +12,22 @@ class ClassifcationSeeder extends Seeder
      */
     public function run()
     {
-        Classifications::create([
+        Classification::create([
             'name_classification' => 'Ámbito: Seguridad de la cirugía',
         ]);
-        Classifications::create([
+        Classification::create([
             'name_classification' => 'Ámbito: Atención obstétrica',
         ]);
-        Classifications::create([
+        Classification::create([
             'name_classification' => 'Ámbito: Infecciones asociadas a la atención en salud',
         ]);
-        Classifications::create([
+        Classification::create([
             'name_classification' => 'Ámbito: seguridad la medicina transfusional',
         ]);
-        Classifications::create([
+        Classification::create([
             'name_classification' => 'Ámbito: Atención y cuidados de los pacientes',
         ]);
-        Classifications::create([
+        Classification::create([
             'name_classification' => 'Otros',
         ]);
 

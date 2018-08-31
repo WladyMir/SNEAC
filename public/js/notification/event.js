@@ -20,6 +20,7 @@ function selectChangeEvent() {
             }
             $('#select_name_event').html(htmlNameEvent);
         });
+
     }
     else {
         $('#select_name_event').html('<option value> Escoja evento</option>');

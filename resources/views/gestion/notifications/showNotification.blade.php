@@ -2,6 +2,15 @@
 
 @section('title','Administracion')
 
+@section('menu')
+    @include('includes.menu',['c'=>$count,
+    'quantityReports'=>$quantityReports,
+    'quantityAllReports'=>$quantityAllReports,
+    'quantityImpPlans'=>$quantityImpPlans,
+    'quantityAllImpPlans'=>$quantityAllImpPlans,
+    ])
+@endsection
+
 @section('title card','Detalles')
 
 @section('content')
@@ -70,7 +79,7 @@
 
                 <label for="staticConequences" class="col-form-label"><strong>Consecuencias:</strong></label>
                 <div>
-                    <input type="text" readonly="" class="form-control-plaintext" id="staticConequences" value="{{$consequence->consequence}}">
+                    <p>{{$consequence->consequence}}</p>
                 </div>
 
 
@@ -130,3 +139,5 @@
 
 
 @endsection
+
+
