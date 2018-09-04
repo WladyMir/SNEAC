@@ -33,7 +33,7 @@
                     <label for="activity" class="col-sm-3 col-form-label"><strong>ACTIVIDAD:</strong>(tareas para cada una de ellas)</label>
 
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="activity" name="activity" rows="4"></textarea>
+                        <textarea class="form-control" id="activity" name="activity" rows="4">{{$activity->activity}}</textarea>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                                 <li>No se han agregado responsables</li>
                             @else
                                 @foreach($responsables as $responsable)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">{{$responsable->user->name}}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">{{$responsable->user->labor}} {{$responsable->user->name}} {{$responsable->position}}
                                         <button class="btn btn-danger btn-xs btn-delete delete-res" value="{{ $responsable['id'] }}"><span class="oi oi-x"></span></button>
 
                                     </li>
@@ -91,7 +91,7 @@
                     <label for="date" class="col-sm-3 col-form-label"><strong>FECHA:</strong></label>
 
                     <div class="col-sm-4">
-                        <input type="text" class="form-control datepicker" name="date" id="date" value="">
+                        <input type="text" class="form-control datepicker" name="date" id="date" value="{{$activity->date}}">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
@@ -105,14 +105,14 @@
                     <label for="indicator" class="col-sm-3 col-form-label"><strong>VERIFICABLE O INDICADOR:</strong></label>
 
                     <div class="col-sm-9">
-                        <input type="text" class="form-control"  name="indicator" id="indicator" value="">
+                        <input type="text" class="form-control"  name="indicator" id="indicator" value="{{$activity->indicator}}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="date_indicator" class="col-sm-3 col-form-label"><strong>FECHA: </strong></label>
 
                     <div class="col-sm-4">
-                        <input type="text" class="form-control datepickerM" name="date_indicator" id="date_indicator" value="">
+                        <input type="text" class="form-control datepickerM" name="date_indicator" id="date_indicator" value="{{$activity->date_indicator}}">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
@@ -151,7 +151,7 @@
                                 <li>No se han agregado responsables</li>
                             @else
                                 @foreach($monitoringResponsables as $monitoringResponsable)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">{{$monitoringResponsable->user->name}}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">{{$monitoringResponsable->user->labor}} {{$monitoringResponsable->user->name}}
                                         <button class="btn btn-danger btn-xs btn-delete delete-resM" value="{{ $monitoringResponsable['id'] }}"><span class="oi oi-x"></span></button>
 
                                     </li>
@@ -164,7 +164,7 @@
                     <label for="detail_monitors" class="col-sm-3 col-form-label"><strong>DETALLES DEL O LOS RESPONSABLES DEL MONITOREO:</strong></label>
 
                     <div class="col-sm-9">
-                        <input type="text" class="form-control"  name="detail_monitors" id="detail_monitors" value="">
+                        <input type="text" class="form-control"  name="detail_monitors" id="detail_monitors" value="{{$activity->detail_monitors}}">
                     </div>
                 </div>
 
@@ -173,11 +173,11 @@
                     <label for="date_monitoring" class="col-sm-3 col-form-label"><strong>FECHA MONITOREO:</strong></label>
 
                     <div class="col-sm-9">
-                        <input type="text" class="form-control datepickerM" name="date_monitoring" id="date_monitoring" value="">
+                        <input type="text" class="form-control datepickerM" name="date_monitoring" id="date_monitoring" value="{{$activity->date_monitoring}}">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
-                        <input type="hidden" class="form-control"  name="improvement_plan_id" id="improvement_plan_id" value="{{$improvementPlan->id}}">
+                        <input type="hidden" class="form-control"  name="improvement_plan_id" id="improvement_plan_id" value="{{$activity->improvement_plan_id}}">
 
                     </div>
                 </div>

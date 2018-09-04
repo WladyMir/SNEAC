@@ -21,9 +21,10 @@
                 <label for="filter" class="col-sm-3 col-form-label">Filtrar por:</label>
                 <div class="col-sm-7">
                     <select class="form-control" name="filter" id="select_filter" >
-                        <option value=""> Seleccione un filtro</option>
+                        <option value="3"> Seleccione un filtro</option>
                         <option value="0">Lugar</option>
                         <option value="1">Tipo de evento</option>
+                        <option value="2">Estado del evento</option>
                     </select>
                 </div>
             </div>
@@ -82,7 +83,7 @@
             @endforeach
 
             <td>{{$notification->event_status}}</td>
-            <td><a href="{{ route('gestion.showNotification',[$notification,$eventData,$patientData]) }}" class="btn btn-primary">Gestionar</a></td>
+            <td><a href="{{ route('gestion.showNotification',[$notification]) }}" class="btn btn-primary">Gestionar</a></td>
         </tr>
         @endforeach
         </tbody>

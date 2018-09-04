@@ -41,4 +41,8 @@ class ImprovementPlan extends Model
     {
         return static::where('id', $id)->first();
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

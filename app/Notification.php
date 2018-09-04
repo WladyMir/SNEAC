@@ -35,6 +35,14 @@ class Notification extends Model
     {
         return static::where('place_id',$id)->get();
     }
+    public static function findByEventType($event_type)
+    {
+        return static::where('event_type',$event_type)->get();
+    }
+    public static function findByStatus($event_status)
+    {
+        return static::where('event_status',$event_status)->get();
+    }
     public function place()
     {
         return $this->belongsTo(Place::class);

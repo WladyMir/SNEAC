@@ -2,9 +2,16 @@
 <html>
 <head>
     <style>
+        .table.table-center{
+            width: 840px;
+            margin: 0 auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
         table,th, td {
             border: 1px solid black;
             border-collapse: collapse;
+            margin: 0 auto;
 
         }
         .report{
@@ -12,23 +19,27 @@
             border: 1px solid blueviolet;
             table-layout: fixed;
             text-align: left;
-
-
+            margin: 0 auto;
         }
+
     </style>
+
+    <div>
+        <table class="table table-center">
+            <tbody>
+            <tr style="height: 74px;">
+                <td style="width: 208px; height: 74px;border: 1px solid #000000;"><img src="/home/wladimir/Proyectos/SNEAC_v1/resources/1.png" alt="logo hec" width="265" height="80" /></td>
+                <td style="width: 472px; height: 74px;text-align: center;"><strong>INFORME DE ANÁLISIS INCIDENTE, EVENTO ADVERSO O CENTINELA DEPARTAMENTO DE CALIDAD Y SEGURIDAD DEL PACIENTE, E IAAS</strong></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </head>
+
 <body>
 
-    <table style="width: 682px;">
-        <tbody>
-        <tr style="height: 74px;">
-            <td style="width: 208px; height: 74px;"><img src="/home/wladimir/Proyectos/SNEAC_v1/resources/1.png" alt="logo hec" width="200" height="70" /></td>
-            <td style="width: 472px; height: 74px;text-align: center;"><strong>INFORME DE ANÁLISIS INCIDENTE, EVENTO ADVERSO O CENTINELA DEPARTAMENTO DE CALIDAD Y SEGURIDAD DEL PACIENTE</strong></td>
-        </tr>
-        </tbody>
-    </table>
     <br>
-    <table style="width: 682px;">
+    <table style="width: 840px;">
         <tbody>
         <tr>
             <td>
@@ -39,7 +50,7 @@
         </tbody>
     </table>
     <p></p>
-    <table style="width: 682px;">
+    <table style="width: 840px;">
         <tbody>
         <tr>
             <td>
@@ -49,7 +60,7 @@
         </tbody>
     </table>
     <p></p>
-    <table class="table table-responsive report" style="width: 680px; page-break-inside:avoid; auto;">
+    <table class="table table-responsive report" style="width:840px;">
         <tbody>
             <tr>
                 <td  valign="top">Identificación del servicio o Unidad</td>

@@ -46,6 +46,10 @@ class User extends Authenticatable
     {
         return static::where('id', $id)->first();
     }
+    public function improvementPlan()
+    {
+        return $this->hasMany(ActivityResponsable::class);
+    }
 
 
 

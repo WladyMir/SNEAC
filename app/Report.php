@@ -36,6 +36,10 @@ class Report extends Model
     {
         return static::where('user_id', $id)->get();
     }
+    public static function findByIdNotification($id)
+    {
+        return static::where('notification_id', $id)->get();
+    }
     public static function findById($id)
     {
         return static::where('id', $id)->first();

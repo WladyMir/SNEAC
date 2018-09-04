@@ -83,12 +83,16 @@ class GestionController extends Controller
             'notification_id'=> 'required',
             'message' => 'required',
             ]);
-        Report::create([
-            'user_id'=>$data['user_id'],
-            'notification_id'=>$data['notification_id'],
-            'message' => $data['message'],
-            'status' =>'Entregado',
-        ]);
+        if(count(Report::findByIdNotification($data['notification_id']))==0){
+            Report::create([
+                'user_id'=>$data['user_id'],
+                'notification_id'=>$data['notification_id'],
+                'message' => $data['message'],
+                'status' =>'Entregado',
+            ]);
+
+        }
+
         return redirect()->route('gestion.notifications');
     }
 

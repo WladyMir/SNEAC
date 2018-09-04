@@ -21,6 +21,10 @@ Route::get('/improvementPlan/activity/{id}/responsableMonitoring','\App\Http\Con
 
 Route::get('/notification/place/{id}','\App\Http\Controllers\ApiController@getNotificationsForPlace');
 
+Route::get('/notification/eventType/{event_type}','\App\Http\Controllers\ApiController@getNotificationsForEventType');
+
+Route::get('/notification/eventStatus/{event_status}','\App\Http\Controllers\ApiController@getNotificationsForStatus');
+
 Route::get('/places','\App\Http\Controllers\ApiController@getPlaces');
 
 

@@ -80,6 +80,10 @@ Route::group(['middleware' => 'auth'],function (){
     Route::delete('/contributoryFactor/{id}', 'ReportController@destroyContributoryFactor')
         ->name('reports.destroyContributoryFactor');
 
+    Route::get('descargarPlanDeMejora/{improvementPlan}', 'ImprovementPlanController@createPdf')
+        ->where('report', '[0-9]+')
+        ->name('$improvementPlans.pdf');
+
     Route::get('/gestion/PlanesDeMejora','ImprovementPlanController@improvementPlans')
         ->name('improvementPlans.improvementPlans');
 
@@ -110,11 +114,21 @@ Route::group(['middleware' => 'auth'],function (){
 
     Route::post('/gestion/planMejora/agregarActividad', 'ImprovementPlanController@addActivity')
         ->name('improvementPlans.addActivity');
+
+    Route::get('/gestion/planMejora/{activity}/editarActividad', 'ImprovementPlanController@activityEdit')
+        ->name('improvementPlans.activityEdit');
+
     Route::delete('/activity/{id}', 'ImprovementPlanController@destroyActivity')
         ->name('improvementPlans.destroyActivity');
 });
 
 Route::group(['middleware' => 'admin'],function (){
+    Route::get('/gestion/informes/todos','ReportController@allReports')
+        ->name('reports.allReports');
+
+    Route::get('/gestion/PlanesDeMejoras/todos','ImprovementPlanController@allImprovementPlans')
+        ->name('improvementPlans.allImprovementPlans');
+
     Route::get('/gestion/notificaciones','GestionController@notifications')
         ->name('gestion.notifications');
 

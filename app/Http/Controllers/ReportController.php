@@ -50,6 +50,26 @@ class ReportController extends Controller
         return view('gestion.reports.reports',compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','id','reports','notifications','eventDatas','patientDatas','places','names'));
     }
 
+    public function allReports(){
+        $id = Auth::id();
+        $reports=Report::all();
+        $notifications = Notification::all();
+        $eventDatas = EventData::all();
+        $patientDatas = PatientData::all();
+        $places = Place::all();
+        $names = EventsName::all();
+
+        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
+        $quantityAllReports=Report::countByStatus('Entregado');
+        $count= Notification::countByStatus('Por revisar');
+        $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
+        $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
+
+        return view('gestion.reports.allReports',compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','id','reports','notifications','eventDatas','patientDatas','places','names'));
+
+
+    }
+
     public function showReport(Report $report){
 
         //dd($report->id);
@@ -73,13 +93,22 @@ class ReportController extends Controller
             'status' => $data['status'],
         ]);
         if($report->status=='Finalizado'){
-            $improvementPlan=ImprovementPlan::create([
-                'report_id' => $report->id,
-                'objective'=>'',
-                'scope'=>'',
-                'user_id'=>$report->user_id,
-                'status'=>0,
+            $not=Notification::findById($report->notification_id);
+            $not->update([
+               'event_status'=> 'En plan de mejora',
             ]);
+            $im=ImprovementPlan::findByIdReport($report->id);
+
+            if(count($im)==0){
+                $improvementPlan=ImprovementPlan::create([
+                    'report_id' => $report->id,
+                    'objective'=>'',
+                    'scope'=>'',
+                    'user_id'=>$report->user_id,
+                    'status'=>0,
+                ]);
+            }
+
         }
         return redirect()->route('reports.reports');
     }
@@ -97,7 +126,7 @@ class ReportController extends Controller
             'participants',
             'report_dates',
             'contributory_factors'
-        ));
+        ))->setPaper('a4')->setOption('margin-bottom', 0)->setOption('encoding', 'utf-8');
         return $pdf->download('informe.pdf');
     }
 

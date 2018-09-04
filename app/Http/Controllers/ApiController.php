@@ -33,8 +33,36 @@ class ApiController extends Controller
     }
     public function getNotificationsForPlace($id){
 
-        return Notification::findByIdPlace($id);
+        $not=Notification::findByIdPlace($id);
+
+        foreach ($not as $n){
+            $n->place;
+            $n->eventName;
+        }
+
+        return $not;
     }
+    public function getNotificationsForEventType($event_type){
+        $not=Notification::findByEventType($event_type);
+
+        foreach ($not as $n){
+            $n->place;
+            $n->eventName;
+        }
+
+        return $not;
+    }
+    public function getNotificationsForStatus($event_status){
+        $not=Notification::findByStatus($event_status);
+
+        foreach ($not as $n){
+            $n->place;
+            $n->eventName;
+        }
+
+        return $not;
+    }
+
     public function getPlaces(){
         return Place::all('id','place');
     }

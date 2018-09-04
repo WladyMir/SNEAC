@@ -22,6 +22,8 @@ class CreateActivityResponsablesTable extends Migration
             $table->string('position')->nullable();
             $table->unsignedInteger('activity_id')->nullable();
             $table->foreign('activity_id')->references('id')->on('activities_improvement_plans');
+            $table->unsignedInteger('improvement_plan_id')->nullable();
+            $table->foreign('improvement_plan_id')->references('id')->on('improvement_plans');
             $table->timestamps();
         });
     }

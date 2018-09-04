@@ -21,6 +21,8 @@ class CreateMonitoringResponsablesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('activity_id');
             $table->foreign('activity_id')->references('id')->on('activities_improvement_plans')->nullable();
+            $table->unsignedInteger('improvement_plan_id')->nullable();
+            $table->foreign('improvement_plan_id')->references('id')->on('improvement_plans');
             $table->timestamps();
         });
     }

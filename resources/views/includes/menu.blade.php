@@ -16,7 +16,7 @@
                 <span class="badge badge-pill badge-danger">{{$quantityReports}}</span>
                 @endif
             </li>
-            <li @if(request()->is('gestion/PlanesDeMejora')) class="nav-link active" @endif class="nav-item">
+            <li @if(request()->is('gestion/PlanesDeMejora') or request()->is('gestion/PlanesDeMejoras/todos') ) class="nav-link active" @endif class="nav-item">
                 <a class="nav-link" href="{{ route('improvementPlans.improvementPlans') }}">Planes de mejora</a>@if($quantityImpPlans>0)
                 <span class="badge badge-pill badge-danger">{{$quantityImpPlans}}</span>@endif
             </li>

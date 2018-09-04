@@ -82,7 +82,7 @@
                 <div class="form-group row">
                     <label for="date" class="col-sm-5 col-form-label">Fecha de ocurrencia</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control"  name="date" id="date" value="{{ $date_event}}" readonly>
+                        <input type="text" class="form-control"  name="date" id="date" value="{{$date_event}}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
         'date_indicator',
         'date_monitoring',
         'improvement_plan_id',
-        'detail_monitors,'
+        'detail_monitors',
     ];
     public function improvementPlan()
     {

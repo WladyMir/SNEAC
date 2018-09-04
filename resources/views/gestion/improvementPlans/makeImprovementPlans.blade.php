@@ -75,18 +75,33 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($activitiesImprovementPlans as $activitiesImprovementPlans)
+                    @foreach($activitiesImprovementPlans as $activitiesImprovementPlan)
 
                         <tr class="table-active">
 
-                            <th scope="row">{{$activitiesImprovementPlans->activity}}</th>
+                            <th scope="row">{{$activitiesImprovementPlan->activity}}</th>
 
-                            <td>{{$activitiesImprovementPlans->responsable}}</td>
-                            <td>{{$activitiesImprovementPlans->date}}</td>
-                            <td>{{$activitiesImprovementPlans->indicator}}</td>
-                            <td>{{$activitiesImprovementPlans->responsible_monitoring}}</td>
-                            <td>{{$activitiesImprovementPlans->date_monitoring}}</td>
-                            <td><button class="btn btn-danger btn-xs btn-delete delete-actImpPln" value="{{ $activitiesImprovementPlans['id'] }}"><span class="oi oi-x"></span></button></td>
+                            <td>@foreach($activityResponsables as $activityResponsable)
+                                    @if($activityResponsable->activity_id==$activitiesImprovementPlan->id)
+                                        {{$activityResponsable->labor}} {{$activityResponsable->name}} {{$activityResponsable->position}}<br />
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>{{$activitiesImprovementPlan->date}}</td>
+                            <td>{{$activitiesImprovementPlan->indicator}}<br /> {{$activitiesImprovementPlan->date_indicator}}</td>
+                            <td>@foreach($monitoringResponsables as $monitoringResponsable)
+                                    @if($monitoringResponsable->activity_id==$activitiesImprovementPlan->id)
+                                        {{$monitoringResponsable->position}} {{$monitoringResponsable->name}},<br />
+                                    @endif
+                                @endforeach
+                                : {{$activitiesImprovementPlan->detail_monitors}}
+                            </td>
+                            <td>{{$activitiesImprovementPlan->date_monitoring}}</td>
+
+                            <td>
+                                <a href="{{route('improvementPlans.activityEdit',$activitiesImprovementPlan)}}" class="btn btn-link"><span class="oi oi-pencil"></span></a>
+                                <button class="btn btn-danger btn-xs btn-delete delete-actImpPln" value="{{ $activitiesImprovementPlan['id'] }}"><span class="oi oi-trash"></span></button>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

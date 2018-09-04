@@ -11,8 +11,17 @@ class MonitoringResponsable extends Model
         'name',
         'labor',
         'activity_id',
+        'improvement_plan_id',
     ];
 
+    public function improvementPlan()
+    {
+        return $this->belongsTo(ImprovementPlan::class);
+    }
+    public static function findByIdImprovementPlan($id)
+    {
+        return static::where('improvement_plan_id', $id)->get();
+    }
     public function activitiesImprovementPlan()
     {
         return $this->belongsTo(ActivitiesImprovementPlan::class);

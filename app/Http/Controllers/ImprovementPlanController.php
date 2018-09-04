@@ -15,6 +15,7 @@ use App\Report;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 class ImprovementPlanController extends Controller
 {
@@ -47,6 +48,47 @@ class ImprovementPlanController extends Controller
             compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlans','participants','eventDatas','notifications','reports','names','places'));
     }
 
+    public function allImprovementPlans(){
+
+        $id = Auth::id();
+        $improvementPlans=ImprovementPlan::all();
+        $participants=Participant::all();
+        $eventDatas=EventData::all();
+        $notifications=Notification::all();
+        $reports=Report::all();
+        $names=EventsName::all();
+        $places=Place::all();
+
+        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
+        $quantityAllReports=Report::countByStatus('Entregado');
+        $count= Notification::countByStatus('Por revisar');
+        $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
+        $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
+
+
+
+        return view('gestion.improvementPlans.allImprovementPlans',
+            compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlans','participants','eventDatas','notifications','reports','names','places'));
+    }
+
+    public function createPdf(ImprovementPlan $improvementPlan)
+    {
+        $activitiesImprovementPlans=ActivitiesImprovementPlan::findByIdImprovementPlan($improvementPlan->id);
+        $activityResponsables=ActivityResponsable::findByIdImprovementPlan($improvementPlan->id);
+        $monitoringResponsables=MonitoringResponsable::findByIdImprovementPlan($improvementPlan->id);
+
+        $pdf=PDF::loadView('gestion.improvementPlans.pdf',
+            compact('improvementPlan',
+                'monitoringResponsables',
+                'activityResponsables',
+                'activitiesImprovementPlans'))
+            ->setOrientation('landscape')
+            ->setOption('encoding', 'utf-8')
+            ->setPaper('a4')
+            ->setOption('margin-bottom', 0);
+        return $pdf->download('Plan de Mejora.pdf');
+    }
+
     public function makeImprovementPlan(ImprovementPlan $improvementPlan){
         $activitiesImprovementPlans=ActivitiesImprovementPlan::findByIdImprovementPlan($improvementPlan->id);
         $id = Auth::id();
@@ -57,8 +99,10 @@ class ImprovementPlanController extends Controller
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
         $users=User::all();
+        $activityResponsables=ActivityResponsable::findByIdImprovementPlan($improvementPlan->id);
+        $monitoringResponsables=MonitoringResponsable::findByIdImprovementPlan($improvementPlan->id);
 
-        return view('gestion.improvementPlans.makeImprovementPlans',compact('users','quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlan','activitiesImprovementPlans'));
+        return view('gestion.improvementPlans.makeImprovementPlans',compact('monitoringResponsables','activityResponsables','users','quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlan','activitiesImprovementPlans'));
     }
 
     public function addActivityAux(ImprovementPlan $improvementPlan){
@@ -86,17 +130,55 @@ class ImprovementPlanController extends Controller
         $monitoringResponsables=MonitoringResponsable::findByIdActivity($activity->id);
 
 
-        return view('gestion.improvementPlans.addActivity',compact('monitoringResponsables','responsables','activity','activitiesImprovementPlans','users','quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlan'));
+        return view('gestion.improvementPlans.addActivity',compact(
+            'monitoringResponsables',
+            'responsables',
+            'activity',
+            'activitiesImprovementPlans',
+            'users',
+            'quantityAllImpPlans',
+            'quantityImpPlans',
+            'quantityAllReports',
+            'count',
+            'quantityReports',
+            'improvementPlan'));
 
+    }
+
+    public function activityEdit(ActivitiesImprovementPlan $activity){
+        $id = Auth::id();
+        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
+        $quantityAllReports=Report::countByStatus('Entregado');
+        $count= Notification::countByStatus('Por revisar');
+        $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
+        $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
+
+        $responsables=ActivityResponsable::findByIdActivity($activity->id);
+        $monitoringResponsables=MonitoringResponsable::findByIdActivity($activity->id);
+        $users=User::all();
+
+
+
+        return view('gestion.improvementPlans.editActivityImprovementPlan',compact('quantityAllImpPlans',
+            'quantityImpPlans',
+            'quantityAllReports',
+            'count',
+            'quantityReports',
+            'activity',
+            'responsables',
+            'users',
+            'monitoringResponsables'));
     }
     public function addResponsableMonitoring(){
         $data=request()->validate([
             'user_id'=>'required',
             'activity_id'=> 'required',
+            'improvement_plan_id'=> 'required',
         ]);
 
         MonitoringResponsable::create([
             'user_id'=>$data['user_id'],
+            'improvement_plan_id' =>$data['improvement_plan_id'],
             'activity_id' =>$data['activity_id'],
             'name' => User::findById($data['user_id'])->name,
             'labor' => User::findById($data['user_id'])->labor,
@@ -110,6 +192,7 @@ class ImprovementPlanController extends Controller
             'user_id'=>'required',
             'labor' => 'required',
             'activity_id'=> 'required',
+            'improvement_plan_id'=> 'required',
         ]);
         ActivityResponsable::create([
             'user_id'=>$data['user_id'],
@@ -117,6 +200,7 @@ class ImprovementPlanController extends Controller
             'activity_id' =>$data['activity_id'],
             'name' => User::findById($data['user_id'])->name,
             'labor' => User::findById($data['user_id'])->labor,
+            'improvement_plan_id' =>$data['improvement_plan_id'],
         ]);
         //dd($data);
 
@@ -164,6 +248,8 @@ class ImprovementPlanController extends Controller
         return redirect()->route('improvementPlans.makeImprovementPlan',$improvementPlan);
 
     }
+
+
 
 
     public function addActivityToImprovementPlan(ActivitiesImprovementPlan $activity){

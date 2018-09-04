@@ -12,9 +12,14 @@ class ActivityResponsable extends Model
         'activity_id',
         'name',
         'position',
+        'improvement_plan_id',
     ];
 
 
+    public static function findByIdImprovementPlan($id)
+    {
+        return static::where('improvement_plan_id', $id)->get();
+    }
     public function improvementPlan()
     {
         return $this->belongsTo(ImprovementPlan::class);
