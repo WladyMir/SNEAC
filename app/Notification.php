@@ -8,16 +8,21 @@ class Notification extends Model
 {
 
     protected $fillable = [
-        'patient_datas_id',
-        'event_datas_id',
-        'origin_id',
-        'contributory_factor_id',
+        'identificator',
+        'name_patient',
+        'rut',
+        'age',
+        'diagnostic',
+        'event_date',
+        'event_time',
+        'occurrence_place_id',
+        'notifier_name',
+        'notifier_place_id',
+        'description',
+        'event_consequence',
+        'clinical_record',
         'event_type',
         'event_status',
-        'place_id',
-        'event_date',
-        'event_name_id',
-        'name_patient',
     ];
     public function eventData()
     {
@@ -33,7 +38,7 @@ class Notification extends Model
     }
     public static function findByIdPlace($id)
     {
-        return static::where('place_id',$id)->get();
+        return static::where('occurrence_place_id',$id)->get();
     }
     public static function findByEventType($event_type)
     {
@@ -43,9 +48,13 @@ class Notification extends Model
     {
         return static::where('event_status',$event_status)->get();
     }
-    public function place()
+    public function occurrencePlace()
     {
-        return $this->belongsTo(Place::class);
+        return $this->belongsTo(Place::class,'occurrence_place_id');
+    }
+    public function notifierPlace()
+    {
+        return $this->belongsTo(Place::class,'notifier_place_id');
     }
     public static function countByStatus($status)
     {

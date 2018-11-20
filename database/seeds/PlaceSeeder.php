@@ -16,7 +16,16 @@ class PlaceSeeder extends Seeder
             'place' => 'Cirugía',
         ]);
         Place::create([
-            'place' => 'Medicina    ',
+            'place' => 'Medicina',
+        ]);
+        Place::create([
+            'place' => 'Medicina 1° Piso',
+        ]);
+        Place::create([
+            'place' => 'Medicina 2° Piso',
+        ]);
+        Place::create([
+            'place' => 'Medicina 3° Piso',
         ]);
         Place::create([
             'place' => 'Médico - Quirúrgico',

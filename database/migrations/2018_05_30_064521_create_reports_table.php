@@ -21,7 +21,8 @@ class CreateReportsTable extends Migration
             $table->date('event_date')->nullable();
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('status')->nullable();
+            $table->unsignedInteger('status')->nullable();
+            //0=Entregado,1=Finalizado
             $table->string('service_boss')->nullable();
             $table->string('supervisor')->nullable();
             $table->string('report_writer')->nullable();

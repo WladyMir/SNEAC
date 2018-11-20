@@ -6,7 +6,7 @@
 @section('content')
 <h5 class="card-title">Notificaciones</h5>
 <p class="card-text">Seleccione el siguiente enlace para una nueva notificación.</p>
-<a href="{{ route('notifications.patient') }}" class="btn btn-primary">Nueva Notificación</a>
+<a href="{{ route('notifications.newNotification') }}" class="btn btn-primary">Nueva Notificación</a>
 
 
 @endsection

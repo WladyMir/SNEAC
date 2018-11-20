@@ -30,22 +30,30 @@ class ImprovementPlanController extends Controller
         $id = Auth::id();
         $improvementPlans=ImprovementPlan::findByIdUser($id);
         $participants=Participant::all();
-        $eventDatas=EventData::all();
-        $notifications=Notification::all();
         $reports=Report::all();
-        $names=EventsName::all();
-        $places=Place::all();
 
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
 
 
         return view('gestion.improvementPlans.improvementPlans',
-            compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlans','participants','eventDatas','notifications','reports','names','places'));
+            compact('quantityAllImpPlans',
+                'quantityImpPlans',
+                'quantityAllReports',
+                'count',
+                'quantityReports',
+                'improvementPlans',
+                'participants',
+                'eventDatas',
+                'notifications',
+                'reports',
+                'names',
+                'places'
+            ));
     }
 
     public function allImprovementPlans(){
@@ -53,22 +61,46 @@ class ImprovementPlanController extends Controller
         $id = Auth::id();
         $improvementPlans=ImprovementPlan::all();
         $participants=Participant::all();
-        $eventDatas=EventData::all();
-        $notifications=Notification::all();
-        $reports=Report::all();
-        $names=EventsName::all();
-        $places=Place::all();
 
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
 
 
         return view('gestion.improvementPlans.allImprovementPlans',
-            compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlans','participants','eventDatas','notifications','reports','names','places'));
+            compact('quantityAllImpPlans',
+                'quantityImpPlans',
+                'quantityAllReports',
+                'count',
+                'quantityReports',
+                'improvementPlans',
+                'participants'
+            ));
+    }
+
+    public function assignedActivities()
+    {
+        $id = Auth::id();
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
+        $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
+        $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
+
+        $assignedActivities=ActivityResponsable::findByIdUser($id);
+
+        return view('gestion.improvementPlans.assignedActivities',
+            compact('quantityAllImpPlans',
+                'quantityImpPlans',
+                'quantityAllReports',
+                'count',
+                'quantityReports',
+                'assignedActivities'));
+
+
     }
 
     public function createPdf(ImprovementPlan $improvementPlan)
@@ -92,9 +124,9 @@ class ImprovementPlanController extends Controller
     public function makeImprovementPlan(ImprovementPlan $improvementPlan){
         $activitiesImprovementPlans=ActivitiesImprovementPlan::findByIdImprovementPlan($improvementPlan->id);
         $id = Auth::id();
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
@@ -102,7 +134,18 @@ class ImprovementPlanController extends Controller
         $activityResponsables=ActivityResponsable::findByIdImprovementPlan($improvementPlan->id);
         $monitoringResponsables=MonitoringResponsable::findByIdImprovementPlan($improvementPlan->id);
 
-        return view('gestion.improvementPlans.makeImprovementPlans',compact('monitoringResponsables','activityResponsables','users','quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','improvementPlan','activitiesImprovementPlans'));
+        return view('gestion.improvementPlans.makeImprovementPlans',
+            compact('monitoringResponsables',
+            'activityResponsables',
+                'users',
+                'quantityAllImpPlans',
+                'quantityImpPlans',
+                'quantityAllReports',
+                'count',
+                'quantityReports',
+                'improvementPlan',
+                'activitiesImprovementPlans'
+            ));
     }
 
     public function addActivityAux(ImprovementPlan $improvementPlan){
@@ -117,9 +160,9 @@ class ImprovementPlanController extends Controller
     public function addActivity2(ImprovementPlan $improvementPlan, ActivitiesImprovementPlan $activity){
         $activitiesImprovementPlans=ActivitiesImprovementPlan::findByIdImprovementPlan($improvementPlan->id);
         $id = Auth::id();
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
@@ -147,9 +190,9 @@ class ImprovementPlanController extends Controller
 
     public function activityEdit(ActivitiesImprovementPlan $activity){
         $id = Auth::id();
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 

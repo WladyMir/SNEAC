@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
     }
     public function activityResponsable()
     {
-        return $this->hasMany(ActivityResponsable::class);
+        return $this->belongsTo(ActivityResponsable::class);
     }
     public function monitoringResponsable()
     {

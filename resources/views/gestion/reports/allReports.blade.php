@@ -37,7 +37,6 @@
                 <th scope="col">Nombre del paciente</th>
                 <th scope="col">Lugar de ocurrencia del evento</th>
                 <th scope="col">Fecha Notificación</th>
-                <th scope="col">Nombre del evento</th>
                 <th scope="col">Tipo de Evento</th>
                 <th scope="col">Estado del informe</th>
                 <th scope="col">Encargado de realizar el informe</th>
@@ -48,42 +47,33 @@
             <tbody>
             @foreach($reports as $report)
                 <tr class="table-default">
-                    @foreach($notifications as $notification)
-
-                        @if($report->notification_id == $notification->id)
-                            @foreach($patientDatas as $patientData)
-                                @if($patientData->id == $notification->patient_datas_id)
-                                    <td>{{$patientData->name_patient}}</td>
-                                @endif
-                            @endforeach
-                            @foreach($eventDatas as $eventData)
-                                @if($eventData->id == $notification->event_datas_id)
-                                    @foreach($places as$place)
-                                        @if($place->id == $eventData->place_id)
-                                            <td>{{$place->place}}</td>
-                                        @endif
-                                    @endforeach
-                                    <td>{{$eventData->event_date}}</td>
-                                    @foreach($names as$name)
-                                        @if($name->id == $eventData->event_name_id)
-                                            <td>{{$name->name}}</td>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            @endforeach
-                            <td>{{$notification->event_type}}</td>
-                        @endif
-
-
-                    @endforeach
-                        <td>{{$report->status}}</td>
-                        <td>{{$report->user->name}}</td>
-                        <td><a href="{{route('reports.showReport',$report)}}" class="btn btn-primary">Informe</a>
-                        <p></p>
-                        @if($report->status=='Finalizado')
-                        <a href="{{route('reports.pdf',$report)}}" class="btn btn-primary">Descargar</a>
+                    <td>{{$report->notification->name_patient}}</td>
+                    <td>{{$report->notification->occurrencePlace->place}}</td>
+                    <td>{{$report->notification->event_date}}</td>
+                    <td>
+                        @if ($report->notification->event_type === 0)
+                            Sin Clasificar
+                        @elseif ($report->notification->event_type === 1)
+                            Incidente
+                        @elseif ($report->notification->event_type === 2)
+                            Evento Adverso
+                        @else
+                            Evento Centinela
                         @endif
                     </td>
+                    <td>
+                        @if($report->status===0)
+                            Entregado
+                        @else
+                            Finalizado
+                        @endif
+                    </td>
+                    <td>{{$report->user->name}}</td>
+                    <td><a href="{{route('reports.showReport',$report)}}" class="btn btn-primary">Informe</a>
+                    <p></p>
+                    @if($report->status==1)
+                    <a href="{{route('reports.pdf',$report)}}" class="btn btn-primary">Descargar</a>
+                    @endif
 
                 </tr>
             @endforeach

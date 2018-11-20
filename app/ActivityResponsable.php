@@ -24,7 +24,7 @@ class ActivityResponsable extends Model
     {
         return $this->belongsTo(ImprovementPlan::class);
     }
-    public function activitiesImprovementPlan()
+    public function activity()
     {
         return $this->belongsTo(ActivitiesImprovementPlan::class);
     }

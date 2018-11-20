@@ -50,7 +50,7 @@
             </div>
         </div>
     </form>
-
+    <p></p>
     <a href="{{route('improvementPlans.addActivityAux',$improvementPlan)}}" class="btn btn-primary">Agregar Actividad</a>
 
     <div class="form-group row">

@@ -48,11 +48,11 @@
     <table class="table table-hover table-justified" id="tableNotifications">
         <thead>
         <tr>
+            <th scope="col">Id Notificación</th>
+            <th scope="col">Nombre del paciente</th>
             <th scope="col">Lugar de ocurrencia del evento</th>
             <th scope="col">Fecha Notificación</th>
-            <th scope="col">Nombre del evento</th>
             <th scope="col">Tipo de Evento</th>
-            <th scope="col">Nombre del paciente</th>
             <th scope="col">Estado del evento</th>
 
         </tr>
@@ -60,29 +60,32 @@
         <tbody>
         @foreach($notifications as $notification)
         <tr class="table-default">
-            @foreach($eventDatas as$eventData)
-                @if($eventData->id == $notification->event_datas_id)
-                    @foreach($places as$place)
-                        @if($place->id == $eventData->place_id)
-                            <td>{{$place->place}}</td>
-                        @endif
-                    @endforeach
-                    <td>{{$eventData->event_date}}</td>
-                    @foreach($names as$name)
-                        @if($name->id == $eventData->event_name_id)
-                            <td>{{$name->name}}</td>
-                        @endif
-                    @endforeach
+            <td>{{$notification->identificator}}</td>
+            <td>{{$notification->name_patient}}</td>
+            <td>{{$notification->occurrencePlace->place}}</td>
+            <td>{{$notification->event_date}}</td>
+            <td>
+                @if ($notification->event_type === 0)
+                    Sin Clasificar
+                @elseif ($notification->event_type === 1)
+                    Incidente
+                @elseif ($notification->event_type === 2)
+                    Evento Adverso
+                @else
+                    Evento Centinela
                 @endif
-            @endforeach
-            <td>{{$notification->event_type}}</td>
-            @foreach($patientDatas as $patientData)
-                @if($patientData->id == $notification->patient_datas_id)
-                    <td>{{$patientData->name_patient}}</td>
+            </td>
+            <td>
+                @if ($notification->event_status === 0)
+                    Pendiente
+                @elseif ($notification->event_status === 1)
+                    Analisis/Informe
+                @elseif ($notification->event_status === 2)
+                    Plan de Mejora
+                @else
+                    Monitereo Plan de Mejora
                 @endif
-            @endforeach
-
-            <td>{{$notification->event_status}}</td>
+            </td>
             <td><a href="{{ route('gestion.showNotification',[$notification]) }}" class="btn btn-primary">Gestionar</a></td>
         </tr>
         @endforeach

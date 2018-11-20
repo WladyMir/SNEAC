@@ -12,6 +12,7 @@ use App\PatientData;
 use App\EventData;
 use App\Place;
 use App\Notification;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
@@ -39,14 +40,63 @@ class NotificationController extends Controller
         return view('notifications.index',compact('title'));
     }
 
-    public function create(){
-        $consequences= Consequence::all();
+    public function newNotification(){
 
         $places = Place::all();
 
         //dd($concequences);
 
         return view('notifications.patient',compact('consequences','places'));
+    }
+
+    public function storeNotification(){
+        $data = request()->validate([
+            'name_patient' =>'required',
+            'rut' => 'required|cl_rut',
+            'age' => 'required|integer',
+            'diagnostic' => 'required|max:100',
+            'event_date' => 'required',
+            'event_time' => 'required',
+            'occurrence_place_id' =>'required',
+            'notifier_name' =>'nullable',
+            'notifier_place_id' =>'required',
+            'description' =>'required',
+            'event_consequence'=>'required',
+            'clinical_record'=>'required',
+        ],[
+            'name_patient.required' => 'El campo nombre es obligatorio',
+            'rut.cl_rut' => 'El campo debe ser un rut valido',
+            'age.required' => 'El campo edad es obligatorio',
+            'age.integer' => 'El campo edad debe ser un numero',
+            'diagnostic.required' => 'El campo diagnostico es obligatorio',
+        ]);
+
+        //dd($data);
+        $notification=Notification::create([
+            'name_patient' =>$data['name_patient'],
+            'rut' => $data['rut'],
+            'age' => $data['age'],
+            'diagnostic' => $data['diagnostic'],
+            'event_date' => $data['event_date'],
+            'event_time' => $data['event_time'],
+            'occurrence_place_id' =>$data['occurrence_place_id'],
+            'notifier_name' =>$data['notifier_name'],
+            'notifier_place_id' =>$data['notifier_place_id'],
+            'description' =>$data['description'],
+            'event_consequence'=>$data['event_consequence'],
+            'clinical_record'=>$data['clinical_record'],
+            'event_type'=>0,
+            'event_status'=>0,
+        ]);
+        $date=new \Datetime();
+
+
+        $notification->update([
+            'identificator'=> $date->format('m-Y/'). $notification->id,
+        ]);
+        $title = 'Listado de notifiaciones';
+        return view('notifications.index',compact('title'));
+
     }
     public function event()
     {

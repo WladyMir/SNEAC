@@ -23,15 +23,15 @@ Route::get('/home', function () {
 Route::get('/notificacion', 'NotificationController@index')
     ->name('notifications.index');
 
-Route::post('/notificacion', 'NotificationController@storeEventData');
 
-Route::get('/notificacion/paciente', 'NotificationController@create')
-    ->name('notifications.patient');
 
-Route::get('/notificacion/evento', 'NotificationController@event')
-    ->name('notifications.event');
 
-Route::post('notificacion/evento', 'NotificationController@storePatientData');
+Route::get('/notificacion/nueva', 'NotificationController@newNotification')
+    ->name('notifications.newNotification');
+
+
+
+Route::post('notificacion/nueva', 'NotificationController@storeNotification');
 
 
 
@@ -120,6 +120,9 @@ Route::group(['middleware' => 'auth'],function (){
 
     Route::delete('/activity/{id}', 'ImprovementPlanController@destroyActivity')
         ->name('improvementPlans.destroyActivity');
+
+    Route::get('/gestion/PlanesDeMejoras/actividadesAsignadas','ImprovementPlanController@assignedActivities')
+        ->name('improvementPlans.assignedActivities');
 });
 
 Route::group(['middleware' => 'admin'],function (){
@@ -158,8 +161,6 @@ Route::group(['middleware' => 'admin'],function (){
     Route::put('/gestion/notificaciones/{notification}/clasificacion','GestionController@statusUpdate');
 
     Route::post('/gestion/notificaciones','GestionController@reportAssignment');
-
-
 
 });
 

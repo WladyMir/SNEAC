@@ -17,101 +17,89 @@
     </div>
 @endif
 
-<form method="POST" action="{{ url('notificacion/evento') }}" >
+<form method="POST" action="{{ url('notificacion/nueva') }}" >
     {{ csrf_field() }}
     <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label for="name_patient">Nombre</label>
-                <input type="text" class="form-control" name="name_patient" id="name_patient" placeholder="Pedro Perez" value="{{ old('name_patient') }}">
-            </div>
+        <label class="col-3" for="name_patient"><strong>NOMBRE DEL PACIENTE:</strong></label>
+        <input type="text" class="form-control col-9" name="name_patient" id="name_patient" placeholder="Ej: Pedro Perez" value="{{ old('name_patient') }}">
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="rut"><strong>RUT:</strong></label>
+        <input type="text" class="form-control col-3" name="rut" id="rut" placeholder="Ej: 11.111.111-1" value="{{ old('rut') }}">
 
-            <label for="admission_date" >Fecha de Ingreso</label>
-            <div class="input-group">
-
-                <input type="text" class="form-control datepicker" name="admission_date" value="{{ old('admission_date') }}">
-                <div class="input-group-addon">
-                    <span class="glyphicon glyphicon-th"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="rut">Rut</label>
-                <input type="text" class="form-control" name="rut" id="rut" placeholder="12.345.678-9" value="{{ old('rut') }}">
-            </div>
-
-
-
-            <label>Sexo</label>
-            <div class="form-group">
-                <label class="radio-inline">
-                    <input type="radio" name="gender" id="sexoM" value="masculino"> masculino
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="gender" id="sexoF" value="femenino"> femenino
-                </label>
-
-            </div>
-            <label>Clasificación del Paciente</label>
-            <div class="form-group">
-                <label class="radio-inline">
-                    <input type="radio" name="patient_classification" id="adulto" value="adulto"> adulto
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="patient_classification" id="neonato" value="neonato"> neonato
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="patient_classification" id="pediatrico" value="pediatrico"> pediatrico
-                </label>
-
-            </div>
-            <label>Tipo de Paciente</label>
-            <div class="form-group">
-                <label class="radio-inline">
-                    <input type="radio" name="patient_type" id="ambulatorio" value="ambulatorio" onclick="habilitaDeshabilita(this.form)"> ambulatorio
-                    <div class="form-group">
-                        <select class="form-control" name="place_id"  disabled >
-                            <option value> Escoja el servicio</option>
-                            @foreach($places as $place)
-                                <option  value = "{{$place->id }}">  {{$place->place}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="patient_type" id="hospitalizado" value="hospitalizado" onclick="habilitaDeshabilita(this.form)"> hospitalizado
-                    <input type="text" class="form-control" name="bed" id="bed" disabled value="{{ old('bed') }}" placeholder="Indique cama">
-                </label>
-
-            </div>
-
-
-
+        <label class="col-2" for="age"><strong>EDAD:</strong></label>
+        <input type="text" class="form-control col-4" name="age" id="age" placeholder="Ej: 21" value="{{ old('age') }}">
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="diagnostic"><strong>DIAGNÓSTICO:</strong></label>
+        <input type="text" class="form-control col-9" name="diagnostic" id="diagnostic" placeholder="" value="{{ old('diagnostic') }}">
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="event_date"><strong>FECHA DE EVENTO:</strong></label>
+        <input type="text" class="form-control datepicker col-3" name="event_date" value="{{ old('event_date') }}">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
         </div>
 
-
-        <div class="col-6">
-            <div class="form-group">
-                <label for="observation">Observaciones (diagnóstico)</label>
-                <textarea class="form-control" name="observation" id="observation" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <h2>Consecuencias</h2>
-                @foreach($consequences as $consequence)
-                    <label class="custom-control custom-radio">
-                        <input type="radio" name="consequence_id" id="{{$consequence->id}}" value="{{$consequence->id}}"> {{$consequence->consequence}}
-                    </label>
-                @endforeach
-            </div>
-            <button type="submit" class="btn btn-primary">Siguiente</button>
-
-
-
+        <label class="col-2" for="event_time" ><strong>HORA DEL EVENTO: </strong></label>
+        <div class="input-group col-4">
+            <input type="time" name="event_time" value="12:00" step="5">
+        </div>
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="occurrence_place_id" ><strong>SERVICIO/UNIDAD DE OCURRENCIA</strong></label>
+        <select class="form-control col-9" name="occurrence_place_id">
+            <option value> Escoja el servicio</option>
+            @foreach($places as $place)
+                <option  value = "{{$place->id }}">  {{$place->place}}</option>
+            @endforeach
+        </select>
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="notifier_name"><strong>IDENTIFICACIÓN DE QUIEN NOTIFICA: (OPTATIVO)</strong></label>
+        <input type="text" class="form-control col-9" name="notifier_name" id="notifier_name" placeholder="Ej: Pedro Perez" value="{{ old('notifier_name') }}">
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="notifier_place_id" ><strong>SERVICIO/UNIDAD QUE NOTIFICA:</strong></label>
+        <select class="form-control col-9" name="notifier_place_id">
+            <option value> Escoja el servicio</option>
+            @foreach($places as $place)
+                <option  value = "{{$place->id }}">  {{$place->place}}</option>
+            @endforeach
+        </select>
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="description"><strong>DESCRIPCIÓN DEL EVENTO: (PRECISA Y DETALLADA)</strong></label>
+        <textarea class="form-control col-9" name="description" id="description" rows="4"></textarea>
+    </div>
+    <p></p>
+    <div class="row">
+        <label class="col-3" for="event_consequence"><strong>CONSECUENCIA DEL EVENTO:</strong></label>
+        <div class="col-3">
+            <input type="radio" name="event_consequence" id="0" value="0"> <strong>SIN LESIÓN</strong><p></p>
+            <input type="radio" name="event_consequence" id="1" value="1"> <strong>LESIÓN LEVE</strong><p></p>
+            <input type="radio" name="event_consequence" id="2" value="2"> <strong>LESIÓN MODERADA</strong><p></p>
+            <input type="radio" name="event_consequence" id="3" value="3"> <strong>LESIÓN GRAVE</strong><p></p>
+            <input type="radio" name="event_consequence" id="4" value="4"> <strong>MUERTE</strong><p></p>
+        </div>
+        <label class="col-3" for="clinical_record"><strong>LOS HECHOS FUERON REGISTRADOS EN LA FICHA CLÍNICA DEL USUARIO:</strong></label>
+        <div class="col-3">
+            <input type="radio" name="clinical_record" id="sexoM" value="0"> <strong>SI</strong><p></p>
+            <input type="radio" name="clinical_record" id="sexoM" value="1"> <strong>NO</strong><p></p>
+            <input type="radio" name="clinical_record" id="sexoM" value="2"> <strong>SE DESCONOCE</strong<p></p>
 
         </div>
 
     </div>
-
+    <p></p>
+    <button type="submit" class="btn btn-primary"><strong>ENVIAR NOTIFICACIÓN</strong></button>
 
 </form>
 <script src="/js/rut/formatRut.js"></script>
@@ -125,22 +113,7 @@
     });
 
 </script>
-<script type="text/javascript">
-    function habilitaDeshabilita(form)
-    {
-        if (form.patient_type.value === "ambulatorio")
-        {
-            form.place_id.disabled = false;
-            form.bed.disabled = true;
-        }
-        if(form.patient_type.value === "hospitalizado")
-        {
-            form.bed.disabled = false;
-            form.place_id.disabled = true;
-        }
 
-    }
-</script>
 
 
 

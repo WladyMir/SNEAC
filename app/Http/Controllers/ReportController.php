@@ -35,37 +35,42 @@ class ReportController extends Controller
     {
         $id = Auth::id();
         $reports=Report::findByIdUser($id);
-        $notifications = Notification::all();
-        $eventDatas = EventData::all();
-        $patientDatas = PatientData::all();
-        $places = Place::all();
-        $names = EventsName::all();
 
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
-        return view('gestion.reports.reports',compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','id','reports','notifications','eventDatas','patientDatas','places','names'));
+        return view('gestion.reports.reports',compact(
+            'quantityAllImpPlans',
+            'quantityImpPlans',
+            'quantityAllReports',
+            'count',
+            'quantityReports',
+            'id',
+            'reports'
+        ));
     }
 
     public function allReports(){
         $id = Auth::id();
         $reports=Report::all();
-        $notifications = Notification::all();
-        $eventDatas = EventData::all();
-        $patientDatas = PatientData::all();
-        $places = Place::all();
-        $names = EventsName::all();
 
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
-        return view('gestion.reports.allReports',compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','id','reports','notifications','eventDatas','patientDatas','places','names'));
+        return view('gestion.reports.allReports',compact('quantityAllImpPlans',
+            'quantityImpPlans',
+            'quantityAllReports',
+            'count',
+            'quantityReports',
+            'reports'
+        ));
 
 
     }
@@ -74,13 +79,19 @@ class ReportController extends Controller
 
         //dd($report->id);
         $id=Auth::id();
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
-
-        return view('gestion.reports.showReport',compact('quantityAllImpPlans','quantityImpPlans','quantityAllReports','count','quantityReports','report'));
+        return view('gestion.reports.showReport',compact(
+            'quantityAllImpPlans',
+            'quantityImpPlans',
+            'quantityAllReports',
+            'count',
+            'quantityReports',
+            'report'
+        ));
 
     }
 
@@ -92,10 +103,10 @@ class ReportController extends Controller
         $report->update([
             'status' => $data['status'],
         ]);
-        if($report->status=='Finalizado'){
+        if($report->status==1){
             $not=Notification::findById($report->notification_id);
             $not->update([
-               'event_status'=> 'En plan de mejora',
+               'event_status'=> 3,
             ]);
             $im=ImprovementPlan::findByIdReport($report->id);
 
@@ -136,15 +147,10 @@ class ReportController extends Controller
         $report_dates = ReportDate::findByIdReport($report->id);
         $contributory_factors=ContributoryFactorByReport::findByIdReport($report->id);
         $origins= Origin::all();
-        $notification=Notification::findById($report->notification_id);
-        $event_datas=EventData::findById($notification->event_datas_id);
-        $date_event=$event_datas->event_date;
-        $place=Place::findById($event_datas->place_id);
-        $report_writer=User::findById($report->user_id)->name;
 
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
-        $count= Notification::countByStatus('Por revisar');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 
@@ -190,9 +196,6 @@ class ReportController extends Controller
                 'report_dates',
                 'origins',
                 'contributory_factors',
-                'date_event',
-                'place',
-                'report_writer',
                 'unsafe_action',
                 'cause')
         );

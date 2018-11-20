@@ -19,9 +19,9 @@ class AdministrationController extends Controller
     public function administration()
     {
         $id=Auth::id();
-        $count= Notification::countByStatus('Por revisar');
-        $quantityReports=Report::countByStatusAndUser('Entregado',$id);
-        $quantityAllReports=Report::countByStatus('Entregado');
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
 

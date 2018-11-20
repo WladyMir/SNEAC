@@ -45,22 +45,22 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <h4>Estado del evento</h4>
-                            @if($report->status==='Entregado')
+                            @if($report->status===0)
                                 <label class="custom-control custom-radio">
-                                    <input type="radio" name="status"  value="Entregado" checked> Entregado
+                                    <input type="radio" name="status"  value=0 checked> Entregado
                                 </label>
                             @else
                                 <label class="custom-control custom-radio">
-                                    <input type="radio" name="status"  value="Entregado"> Entregado
+                                    <input type="radio" name="status"  value=0> Entregado
                                 </label>
                             @endif
-                            @if($report->status==='Finalizado')
+                            @if($report->status===1)
                                 <label class="custom-control custom-radio">
-                                    <input type="radio" name="status"  value="Finalizado" checked> Finalizado
+                                    <input type="radio" name="status"  value=1 checked> Finalizado
                                 </label>
                             @else
                                 <label class="custom-control custom-radio">
-                                    <input type="radio" name="status"  value="Finalizado"> Finalizado
+                                    <input type="radio" name="status"  value=1> Finalizado
                                 </label>
                             @endif
 

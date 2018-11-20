@@ -59,7 +59,7 @@
                 <div class="form-group row">
                     <label for="report_writer" class="col-sm-4 col-form-label"><strong>INFORME REALIZADO POR:</strong></label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control"  name="report_writer" id="report_writer" placeholder="Pedro Perez" value="{{ $report_writer }}">
+                        <input type="text" class="form-control"  name="report_writer" id="report_writer" placeholder="Pedro Perez" value="{{ $report->user->name }}"readonly>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <div class="form-group row">
                     <label for="place" class="col-sm-5 col-form-label">Identificación del servicio o Unidad</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control"  name="place" id="place" value="{{ $place->place }}" readonly>
+                        <input type="text" class="form-control"  name="place" id="place" value="{{ $report->notification->occurrencePlace->place }}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -82,7 +82,7 @@
                 <div class="form-group row">
                     <label for="date" class="col-sm-5 col-form-label">Fecha de ocurrencia</label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control"  name="date" id="date" value="{{$date_event}}" readonly>
+                        <input type="text" class="form-control"  name="date" id="date" value="{{$report->notification->event_date}}" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
