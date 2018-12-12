@@ -23,10 +23,15 @@ class Notification extends Model
         'clinical_record',
         'event_type',
         'event_status',
+        'classification_data_id',
     ];
     public function eventData()
     {
         return $this->belongsTo(EventData::class);
+    }
+    public function classificationData()
+    {
+        return $this->belongsTo(ClassificationData::class);
     }
     public function patientData()
     {
@@ -52,6 +57,7 @@ class Notification extends Model
     {
         return $this->belongsTo(Place::class,'occurrence_place_id');
     }
+
     public function notifierPlace()
     {
         return $this->belongsTo(Place::class,'notifier_place_id');

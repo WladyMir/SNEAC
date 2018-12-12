@@ -22,7 +22,7 @@ class MonitoringResponsable extends Model
     {
         return static::where('improvement_plan_id', $id)->get();
     }
-    public function activitiesImprovementPlan()
+    public function activity()
     {
         return $this->belongsTo(ActivitiesImprovementPlan::class);
     }

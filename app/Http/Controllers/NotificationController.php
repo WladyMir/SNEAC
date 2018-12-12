@@ -8,10 +8,12 @@ use App\ContributoryFactor;
 use App\Detail;
 use App\EventsName;
 use App\Mail\NewNotification;
+use App\Mail\NotificationNotice;
 use App\PatientData;
 use App\EventData;
 use App\Place;
 use App\Notification;
+use App\User;
 use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -94,6 +96,15 @@ class NotificationController extends Controller
         $notification->update([
             'identificator'=> $date->format('m-Y/'). $notification->id,
         ]);
+        $admins=User::findByAdmin()->pluck('email');
+        $qualityAttendant=User::findByIdPlace($notification->occurrence_place_id);
+
+        Mail::to($admins)
+            ->send(new NewNotification($notification));
+
+        Mail::to($qualityAttendant)
+            ->send(new NotificationNotice($notification));
+
         $title = 'Listado de notifiaciones';
         return view('notifications.index',compact('title'));
 

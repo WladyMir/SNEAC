@@ -2,20 +2,15 @@
 
 namespace App\Mail;
 
-
 use App\Notification;
-use App\Place;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewNotification extends Mailable
+class NotificationNotice extends Mailable
 {
     use Queueable, SerializesModels;
-    /**
-     * @var Place
-     */
     public $notification;
 
     /**
@@ -25,7 +20,6 @@ class NewNotification extends Mailable
      */
     public function __construct(Notification $notification)
     {
-
         $this->notification = $notification;
     }
 
@@ -36,7 +30,7 @@ class NewNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('email.newNotification')
-            ->subject('Nueva notificacion');
+        return $this->view('email.notificationNotice')
+            ->subject('Nueva notificacion en tu Unidad o Servicio');
     }
 }

@@ -32,7 +32,8 @@ class CreateNotificationsTable extends Migration
             //0=sin lesión, 1=lesión leve,2= lesión moderada, 3= lesión grave, 4= muerte
             $table->unsignedInteger('clinical_record');
             //0 = si, 1 = no, 2 = se desconoce
-
+            $table->unsignedInteger('classification_data_id')->nullable();
+            $table->foreign('classification_data_id')->references('id')->on('classification_datas');
             $table->unsignedInteger('event_type');
             //0= sin clasificar, 1=incidente, 2=evento adverso, 3= evento centinela
             $table->unsignedInteger('event_status');

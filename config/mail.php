@@ -7,7 +7,7 @@ return [
 
     'port' => 587,
 
-    'from' => ['address' => 'wlady.ohi@gmail.com', 'name' => 'SNEAC'],
+    'from' => ['address' => 'snieac@gmail.com', 'name' => 'SNEAC'],
 
     'encryption' => 'tls',
 

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
         'date_monitoring',
         'improvement_plan_id',
         'detail_monitors',
+        'status',
     ];
     public function improvementPlan()
     {

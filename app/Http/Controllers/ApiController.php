@@ -36,8 +36,7 @@ class ApiController extends Controller
         $not=Notification::findByIdPlace($id);
 
         foreach ($not as $n){
-            $n->place;
-            $n->eventName;
+            $n->occurrencePlace;
         }
 
         return $not;
@@ -46,8 +45,7 @@ class ApiController extends Controller
         $not=Notification::findByEventType($event_type);
 
         foreach ($not as $n){
-            $n->place;
-            $n->eventName;
+            $n->occurrencePlace;
         }
 
         return $not;
@@ -56,8 +54,7 @@ class ApiController extends Controller
         $not=Notification::findByStatus($event_status);
 
         foreach ($not as $n){
-            $n->place;
-            $n->eventName;
+            $n->occurrencePlace;
         }
 
         return $not;
@@ -67,9 +64,19 @@ class ApiController extends Controller
         return Place::all('id','place');
     }
     public function getResponsableForActivity($id){
-        return ActivityResponsable::findByIdActivity($id);
+        $ar=ActivityResponsable::findByIdActivity($id);
+
+        foreach ($ar as $a){
+            $a->user;
+        }
+        return $ar;
     }
     public function getResponsableMonitoringForActivity($id){
-        return MonitoringResponsable::findByIdActivity($id);
+        $am= MonitoringResponsable::findByIdActivity($id);
+
+        foreach ($am as $a){
+            $a->user;
+        }
+        return $am;
     }
 }

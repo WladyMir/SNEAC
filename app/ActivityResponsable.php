@@ -8,9 +8,7 @@ class ActivityResponsable extends Model
 {
     protected $fillable=[
         'user_id',
-        'labor',
         'activity_id',
-        'name',
         'position',
         'improvement_plan_id',
     ];

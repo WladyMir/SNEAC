@@ -83,7 +83,7 @@
 
                             <td>@foreach($activityResponsables as $activityResponsable)
                                     @if($activityResponsable->activity_id==$activitiesImprovementPlan->id)
-                                        {{$activityResponsable->labor}} {{$activityResponsable->name}} {{$activityResponsable->position}}<br />
+                                        {{$activityResponsable->user->labor}} {{$activityResponsable->user->name}} {{$activityResponsable->position}}<br />
                                     @endif
                                 @endforeach
                             </td>
@@ -91,7 +91,7 @@
                             <td>{{$activitiesImprovementPlan->indicator}}<br /> {{$activitiesImprovementPlan->date_indicator}}</td>
                             <td>@foreach($monitoringResponsables as $monitoringResponsable)
                                     @if($monitoringResponsable->activity_id==$activitiesImprovementPlan->id)
-                                        {{$monitoringResponsable->position}} {{$monitoringResponsable->name}},<br />
+                                        {{$monitoringResponsable->user->position}} {{$monitoringResponsable->user->name}},<br />
                                     @endif
                                 @endforeach
                                 : {{$activitiesImprovementPlan->detail_monitors}}
@@ -100,7 +100,13 @@
 
                             <td>
                                 <a href="{{route('improvementPlans.activityEdit',$activitiesImprovementPlan)}}" class="btn btn-link"><span class="oi oi-pencil"></span></a>
-                                <button class="btn btn-danger btn-xs btn-delete delete-actImpPln" value="{{ $activitiesImprovementPlan['id'] }}"><span class="oi oi-trash"></span></button>
+                                <form action="{{ route('improvementPlans.destroyActivity',$activitiesImprovementPlan->id) }}" method="post">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-danger"><span class="oi oi-trash"></span></button>
+                                    </div>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -123,25 +129,23 @@
             orientation: "bottom auto",
             autoclose: true
         });
-        $(document).on("click",".delete-actImpPln",function(){
+       /* $(document).on("click",".delete-actImpPln",function(){
             var id =  $(this).val();
             $.ajax({
                 url: "/activity/"+id,
                 type: "DELETE",
-                data: {_method: 'delete', _token: '{{csrf_token()}}'},
+                data: {_method: 'delete', _token: csrf_token()}}'},
                 success: function (data) {
                     console.log(data);
                     //alert(data.success);
                     $.get("/api/improvementPlan/"+data.improvement_plan_id+"/activities", function (data) {
                         if(data.length>0){
-                            var htmlTable = '<table class="table table-hover" id="tableFacCon">'+
+                            var htmlTable = '<table class="table table-hover" id="tableActImpPln">'+
                                 '<thead>'+
                                 '<tr>'+
                                 '<th scope="col">ACTIVIDADES</th>'+
-                                '<th scope="col">RESPONSABLE</th>'+
                                 '<th scope="col">FECHA</th>'+
                                 '<th scope="col">VERIFICABLE O INDICADOR</th>'+
-                                '<th scope="col">REPONSABLE DE MONITOREO</th>'+
                                 '<th scope="col">FECHA MONITOREO</th>'+
                                 '<th scope="col"> </th>'+
                                 '</tr>'+
@@ -151,13 +155,12 @@
                             for(var i=0; i<data.length; i++){
                                 htmlTable+='<tr class="table-active">' +
                                     '<th scope="row">'+data[i].activity+'</th>' +
-                                    '<td>'+data[i].responsable+'</td>' +
                                     '<td>'+data[i].date+'</td>' +
                                     '<td>'+data[i].indicator+'</td>' +
-                                    '<td>'+data[i].responsible_monitoring+'</td>' +
                                     '<td>'+data[i].date_monitoring+'</td>' +
-                                    '<td><button class="btn btn-danger btn-xs btn-delete delete-actImpPln" value="'+data[i].id+'"><span class="oi oi-x"></span></button></td>' +
-                                    '</tr></tbody>';
+                                    '<td><a href="route('improvementPlans.activityEdit','+data[i].id+')" class="btn btn-link"><span class="oi oi-pencil"></span></a>'+
+                                    '<button class="btn btn-danger btn-xs btn-delete delete-actImpPln" value="'+data[i].id+'"><span class="oi oi-x"></span></button></td>' +
+                                    '</tr></tbody>';z
 
                             }
                             $('#tableActImpPln').html(htmlTable);
@@ -172,7 +175,7 @@
                 }
             });
 
-        });
+        });*/
         $('#addActivity').on('submit', function (event) {
             event.preventDefault();
             var form_data = $(this).serialize();

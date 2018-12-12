@@ -15,29 +15,34 @@
 
 @section('content')
 
-    @if(auth()->user()->is_admin)
-        <div class="form-group">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('improvementPlans.improvementPlans') }}">Asignados</a>
-                </li>
+
+    <div class="form-group">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ route('improvementPlans.improvementPlans') }}">Asignados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('improvementPlans.assignedActivities') }}">Actividades Asignadas</a>
+            </li>
+            @if(auth()->user()->is_admin)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('improvementPlans.allImprovementPlans') }}">Todos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('improvementPlans.assignedActivities') }}">Actividades Asignadas</a>
+                    <a class="nav-link" href="{{ route('improvementPlans.activityMonitoring') }}">Monitoreo Actividades</a>
                 </li>
+            @endif
 
+        </ul>
 
-            </ul>
+    </div>
 
-        </div>
-    @endif
 
     <div class="bs-component">
         <table class="table table-hover table-justified">
             <thead>
             <tr>
+                <th scope="col">Id Notificación</th>
                 <th scope="col">Lugar de ocurrencia del evento</th>
                 <th scope="col">Fecha Evento</th>
                 <th scope="col">Tipo de Evento</th>
@@ -47,6 +52,7 @@
             <tbody>
             @foreach($improvementPlans as $improvementPlan)
                 <tr class="table-default">
+                    <td>{{$improvementPlan->report->notification->identificator}}</td>
                     <td>{{$improvementPlan->report->place}}</td>
                     <td>{{$improvementPlan->report->event_date}}</td>
                     <td>

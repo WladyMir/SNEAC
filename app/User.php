@@ -50,7 +50,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(ActivityResponsable::class);
     }
-
+    public static function findByIdPlace($id)
+    {
+        return static::where('place_id',$id)->get();
+    }
+    public static function findByAdmin()
+    {
+        return static::where('is_admin',true)->get();
+    }
 
 
 }

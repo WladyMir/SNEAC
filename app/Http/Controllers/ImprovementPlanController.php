@@ -56,6 +56,7 @@ class ImprovementPlanController extends Controller
             ));
     }
 
+
     public function allImprovementPlans(){
 
         $id = Auth::id();
@@ -81,6 +82,68 @@ class ImprovementPlanController extends Controller
             ));
     }
 
+    public function activityMonitoring(){
+        $id = Auth::id();
+
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
+        $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
+        $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
+
+        $monitoringResponsables=MonitoringResponsable::findByIdUser($id);
+        $activityResponsables=ActivityResponsable::all();
+
+        return view('gestion.improvementPlans.activityMonitoring',
+            compact('quantityAllImpPlans',
+                'quantityImpPlans',
+                'quantityAllReports',
+                'count',
+                'quantityReports',
+                'monitoringResponsables',
+                'activityResponsables'
+            )
+        );
+    }
+
+    public function updateStatusActivity(){
+        $data=request()->validate([
+            'activity_id' =>'required',
+        ]);
+        $actImpPlan=ActivitiesImprovementPlan::findById($data['activity_id']);
+        if($actImpPlan->status==0){
+            $actImpPlan->update([
+                'status' => 1,
+            ]);
+        }
+        else{
+            $actImpPlan->update([
+                'status' => 0,
+            ]);
+        }
+        $id = Auth::id();
+
+        $count= Notification::countByStatus(0);
+        $quantityReports=Report::countByStatusAndUser(0,$id);
+        $quantityAllReports=Report::countByStatus(0);
+        $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
+        $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
+
+        $monitoringResponsables=MonitoringResponsable::findByIdUser($id);
+        $activityResponsables=ActivityResponsable::all();
+
+        return view('gestion.improvementPlans.activityMonitoring',
+            compact('quantityAllImpPlans',
+                'quantityImpPlans',
+                'quantityAllReports',
+                'count',
+                'quantityReports',
+                'monitoringResponsables',
+                'activityResponsables'
+            )
+        );
+
+    }
     public function assignedActivities()
     {
         $id = Auth::id();
@@ -98,8 +161,9 @@ class ImprovementPlanController extends Controller
                 'quantityAllReports',
                 'count',
                 'quantityReports',
-                'assignedActivities'));
-
+                'assignedActivities'
+            )
+        );
 
     }
 
@@ -151,6 +215,7 @@ class ImprovementPlanController extends Controller
     public function addActivityAux(ImprovementPlan $improvementPlan){
         $activity=ActivitiesImprovementPlan::create([
             'improvement_plan_id' => $improvementPlan->id,
+            'status' => 0,
         ]);
 
         return redirect()->route('improvementPlans.addActivity2',[$improvementPlan,$activity]);
@@ -241,8 +306,6 @@ class ImprovementPlanController extends Controller
             'user_id'=>$data['user_id'],
             'position'=>$data['labor'],
             'activity_id' =>$data['activity_id'],
-            'name' => User::findById($data['user_id'])->name,
-            'labor' => User::findById($data['user_id'])->labor,
             'improvement_plan_id' =>$data['improvement_plan_id'],
         ]);
         //dd($data);
@@ -276,10 +339,11 @@ class ImprovementPlanController extends Controller
     public function destroyActivity($id)
     {
         $activitiesImprovementPlans=ActivitiesImprovementPlan::findById($id);
+        $improvementPlan=ImprovementPlan::findById($activitiesImprovementPlans->improvement_plan_id);
 
         $activitiesImprovementPlans->delete();
 
-        return response()->json(['success'=>'Se elimino exitosamente','improvement_plan_id'=>$activitiesImprovementPlans->improvement_plan_id]);
+        return redirect()->route('improvementPlans.makeImprovementPlan',$improvementPlan);
     }
     public function updateImprovementPlan(ImprovementPlan $improvementPlan){
         $data=request()->validate([

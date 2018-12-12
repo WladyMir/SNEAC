@@ -132,6 +132,12 @@ Route::group(['middleware' => 'admin'],function (){
     Route::get('/gestion/PlanesDeMejoras/todos','ImprovementPlanController@allImprovementPlans')
         ->name('improvementPlans.allImprovementPlans');
 
+    Route::get('/gestion/PlanesDeMejoras/monitoreoActividades','ImprovementPlanController@activityMonitoring')
+        ->name('improvementPlans.activityMonitoring');
+
+    Route::put('/gestion/PlanesDeMejoras/monitoreoActividades/updateStatusActivity/{activityImprovementPlan}','ImprovementPlanController@updateStatusActivity')
+        ->name('improvementPlans.updateStatusActivity');
+
     Route::get('/gestion/notificaciones','GestionController@notifications')
         ->name('gestion.notifications');
 

@@ -110,7 +110,7 @@ class ReportController extends Controller
             ]);
             $im=ImprovementPlan::findByIdReport($report->id);
 
-            if(count($im)==0){
+            if($im==null){
                 $improvementPlan=ImprovementPlan::create([
                     'report_id' => $report->id,
                     'objective'=>'',

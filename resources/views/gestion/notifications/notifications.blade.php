@@ -83,7 +83,7 @@
                 @elseif ($notification->event_status === 2)
                     Plan de Mejora
                 @else
-                    Monitereo Plan de Mejora
+                    Monitoreo Plan de Mejora
                 @endif
             </td>
             <td><a href="{{ route('gestion.showNotification',[$notification]) }}" class="btn btn-primary">Gestionar</a></td>

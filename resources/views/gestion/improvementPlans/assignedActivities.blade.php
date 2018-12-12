@@ -11,33 +11,37 @@
     ])
 @endsection
 
-@section('title card','Todos los Planes de Mejora')
+@section('title card','Actividades Asignadas')
 
 @section('content')
 
-    @if(auth()->user()->is_admin)
+
         <div class="form-group">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('improvementPlans.improvementPlans') }}">Asignados</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('improvementPlans.allImprovementPlans') }}">Todos</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" href="{{ route('improvementPlans.assignedActivities') }}">Actividades Asignadas</a>
                 </li>
-
+                @if(auth()->user()->is_admin)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('improvementPlans.allImprovementPlans') }}">Todos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('improvementPlans.activityMonitoring') }}">Monitoreo Actividades</a>
+                    </li>
+                @endif
             </ul>
 
         </div>
-    @endif
+
 
     <div class="bs-component">
         <table class="table table-hover table-justified">
             <thead>
             <tr>
-                <<th scope="col">ACTIVIDAD</th>
+                <th scope="col">ACTIVIDAD</th>
                 <th scope="col">RESPONSABLE</th>
                 <th scope="col">FECHA</th>
                 <th scope="col">VERIFICABLE O INDICADOR</th>
@@ -51,7 +55,7 @@
 
                     <th scope="row">{{$assignedActivity->activity->activity}}</th>
 
-                    <td>{{$assignedActivity->name}}</td>
+                    <td>{{$assignedActivity->user->labor}} {{$assignedActivity->user->name}} {{$assignedActivity->position}}</td>
                     <td>{{$assignedActivity->activity->date}}</td>
                     <td>{{$assignedActivity->activity->indicator}}  {{$assignedActivity->activity->date_indicator}}</td>
                     <td>{{$assignedActivity->activity->date_monitoring}}</td>

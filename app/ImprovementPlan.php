@@ -35,7 +35,7 @@ class ImprovementPlan extends Model
     }
     public static function findByIdReport($id)
     {
-        return static::where('report_id', $id)->get();
+        return static::where('report_id', $id)->first();
     }
     public static function findById($id)
     {

@@ -105,6 +105,34 @@
                             <input type="radio" name="event_status"  value=3> En plan de mejora
                         </label>
                     @endif
+
+                    <label for="classification_id" >Clasificación</label>
+                    <div class="form-group">
+                        <select class="form-control" name="classification_id" id="select_classification" >
+                            <option value> Escoja clasificación</option>
+                            @foreach($classifications as $classification)
+                                <option  value = "{{$classification->id }}">  {{$classification->name_classification}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <label for="event_name_id" >Nombre del evento</label>
+                    <div class="form-group">
+                        <select class="form-control" name="event_name_id" id="select_name_event" >
+                            <option value> Escoja evento</option>
+                        </select>
+                    </div>
+
+                    <label for="details_id" >Detalles</label>
+                    <div class="form-group">
+                        <select class="form-control" name="details_id" id="select_details" >
+                            <option value> Escoja detalles</option>
+
+                        </select>
+                        <input type="text" class="form-control" name="detail_text" id="detail_text" disabled value="{{ old('detail_text') }}" placeholder="Indicar detalle">
+
+                    </div>
+
                 </div>
                 <button type="submit" class="btn btn-primary">Actualizar datos</button>
             </form>
@@ -152,5 +180,5 @@
             </div>
         </div>
 
-
+    <script src="/js/notification/event.js"></script>
 @endsection

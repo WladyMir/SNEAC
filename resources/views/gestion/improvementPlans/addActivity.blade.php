@@ -222,7 +222,7 @@
                             var htmlListParticipant = '';
 
                             for (var i = 0; i < data.length; i++) {
-                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].labor+' '+ data[i].name+ ' ' +
+                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].user.labor +' '+ data[i].user.name+ ' '+
                                     ' ' +data[i].position+
                                     '<button class="btn btn-danger btn-xs btn-delete delete-res" value="'+ data[i].id + '"><span class="oi oi-x"></span></button></li>';
                             }
@@ -258,7 +258,7 @@
                             var htmlListParticipant = '';
 
                             for (var i = 0; i < data.length; i++) {
-                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].labor+' '+ data[i].name+
+                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].user.labor+' '+ data[i].user.name+
                                     '<button class="btn btn-danger btn-xs btn-delete delete-resM" value="' + data[i].id + '"><span class="oi oi-x"></span></button></li>';
                             }
                             $('#listResponsablesMon').html(htmlListParticipant);
@@ -298,7 +298,7 @@
                             var htmlListParticipant = '';
 
                             for (var i = 0; i < data.length; i++) {
-                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].labor+' '+ data[i].name+
+                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].user.labor+' '+ data[i].user.name+
                                     '<button class="btn btn-danger btn-xs btn-delete delete-resM" value="' + data[i].id + '"><span class="oi oi-x"></span></button></li>';
                             }
                             $('#listResponsablesMon').html(htmlListParticipant);
@@ -341,7 +341,7 @@
                             var htmlListParticipant = '';
 
                             for (var i = 0; i < data.length; i++) {
-                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].labor+' '+ data[i].name+ ' ' +
+                                htmlListParticipant += '<li class="list-group-item d-flex justify-content-between align-items-center">'+data[i].user.labor+' '+ data[i].user.name+ ' ' +
                                     ' ' +data[i].position+
                                     '<button class="btn btn-danger btn-xs btn-delete delete-res" value="' + data[i].id + '"><span class="oi oi-x"></span></button></li>';
                             }

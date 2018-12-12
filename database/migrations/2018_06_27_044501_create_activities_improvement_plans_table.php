@@ -24,7 +24,7 @@ class CreateActivitiesImprovementPlansTable extends Migration
             $table->unsignedInteger('improvement_plan_id')->nullable();
             $table->foreign('improvement_plan_id')->references('id')->on('improvement_plans');
             $table->unsignedInteger('contributory_factor_by_report_id')->nullable();
-            $table->foreign('contributory_factor_by_report_id')->references('id')->on('contributory_factor_by_reports');
+            $table->unsignedInteger('status');//0=pendiente 1=listo
             $table->timestamps();
         });
     }

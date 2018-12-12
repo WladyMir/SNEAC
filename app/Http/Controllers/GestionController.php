@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classification;
+use App\ClassificationData;
 use App\Consequence;
 use App\ContributoryFactor;
 use App\Detail;
@@ -127,6 +128,12 @@ class GestionController extends Controller
                 'notification_id'=>$data['notification_id'],
                 'message' => $data['message'],
             ]);
+            $impPlan=ImprovementPlan::findByIdReport($r->id);
+            if($impPlan!=null){
+                $impPlan->update([
+                    'user_id'=>$data['user_id'],
+                ]);
+            }
             $notification->update([
                 'event_status'=>2,
             ]);
@@ -140,8 +147,56 @@ class GestionController extends Controller
         $data=request()->validate([
             'event_type'=> 'required',
             'event_status'=>'required',
+            'classification_id'=>'required',
+            'event_name_id'=>'required',
+            'details_id'=>'nullable',
+            'detail_text'=>'nullable',
+            ]
+        );
+        //dd($data);
+        if($notification->classification_data_id==null){
+            if($data['details_id']==null){
+                $clfData=ClassificationData::create([
+                    'classification_id'=>$data['classification_id'],
+                    'events_name_id'=>$data['event_name_id'],
+                    'other_detail'=>$data['detail_text'],
+                ]);
+            }
+            else{
+                $clfData=ClassificationData::create([
+                    'classification_id'=>$data['classification_id'],
+                    'events_name_id'=>$data['event_name_id'],
+                    'details_id'=>$data['details_id'],
+                ]);
+            }
+
+            $notification->update([
+                'event_type'=>$data['event_type'],
+                'event_status'=>$data['event_status'],
+                'classification_data_id'=>$clfData->id,
             ]);
-        $notification->update($data);
+        }
+        else{
+            $clfData=ClassificationData::findById($notification->classification_data_id);
+            if($data['details_id']==null){
+                $clfData->update([
+                    'classification_id'=>$data['classification_id'],
+                    'events_name_id'=>$data['event_name_id'],
+                    'other_detail'=>$data['detail_text'],
+                ]);
+            }
+            else{
+                $clfData->update([
+                    'classification_id'=>$data['classification_id'],
+                    'events_name_id'=>$data['event_name_id'],
+                    'details_id'=>$data['details_id'],
+                ]);
+            }
+            $notification->update([
+                'event_type'=>$data['event_type'],
+                'event_status'=>$data['event_status'],
+            ]);
+        }
 
         return redirect()->route('gestion.clasification',compact('notification'));
     }
@@ -180,6 +235,7 @@ class GestionController extends Controller
         $quantityAllReports=Report::countByStatus(0);
         $quantityAllImpPlans=ImprovementPlan::countByStatus(3);
         $quantityImpPlans=ImprovementPlan::countByStatusAndUser(3,$id);
+        $classifications=Classification::all();
 
         $report=Report::findByIdNotification($notification->id);
 
@@ -191,7 +247,8 @@ class GestionController extends Controller
             'count',
             'notification',
             'users',
-            'report'
+            'report',
+            'classifications'
             ));
     }
 

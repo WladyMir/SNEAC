@@ -34,6 +34,7 @@
         <table class="table table-hover table-justified">
             <thead>
             <tr>
+                <th scope="col">Id Notificación</th>
                 <th scope="col">Nombre del paciente</th>
                 <th scope="col">Lugar de ocurrencia del evento</th>
                 <th scope="col">Fecha Notificación</th>
@@ -47,6 +48,7 @@
             <tbody>
             @foreach($reports as $report)
                 <tr class="table-default">
+                    <td>{{$report->notification->identificator}}</td>
                     <td>{{$report->notification->name_patient}}</td>
                     <td>{{$report->notification->occurrencePlace->place}}</td>
                     <td>{{$report->notification->event_date}}</td>
